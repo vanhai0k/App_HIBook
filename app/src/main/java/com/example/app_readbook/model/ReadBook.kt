@@ -1,0 +1,33 @@
+package com.example.app_readbook.model
+
+import com.google.gson.annotations.SerializedName
+
+data class ReadBook(
+    @SerializedName("_id")
+    val _id: String,
+    var image: String?,
+    var title: String?,
+    var content: String?,
+    var userID: User?,
+    var status: String?,
+    var like: List<LikePosts>?,
+    var comment: List<CommentPosts>?,
+//    var comment: CommentPosts?,
+    var datepost: String?
+
+)
+data class LikePosts(
+    @SerializedName("_id")
+    val _id: String,
+    val user_id: User?,
+    var status: String?,
+    var like: List<LikePosts>
+)
+data class CommentPosts(
+    @SerializedName("_id")
+    val _id: String,
+    val user_id: User,
+    var content: String?,
+    var image: String?,
+    var comment: List<CommentPosts>
+)
