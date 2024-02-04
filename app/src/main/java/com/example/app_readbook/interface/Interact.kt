@@ -28,9 +28,9 @@ interface Interact {
         val user_id: String,
     )
     data class CommentNould(
-        val user_id: RequestBody,
-        val content: RequestBody,
-        val image: MultipartBody.Part
+        val user_id: String,
+        val content: String,
+//        val image: MultipartBody.Part
     )
     data class CommentApiResponse(
         val message: String,
@@ -43,12 +43,9 @@ interface Interact {
         @Body likeRequest: LikeRequest
     ): Call<LikeRequest>
 
-    @Multipart
     @POST("addcomment/{nouvelleId}")
     fun addObjImage(
         @Path("nouvelleId") nouvelleId: String,
-        @Part("user_id") username: RequestBody,
-        @Part("content") password: RequestBody,
-        @Part image: MultipartBody.Part
+        @Body commentNould: CommentNould
     ): Call<CommentApiResponse>
 }

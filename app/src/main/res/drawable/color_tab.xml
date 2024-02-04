@@ -1,0 +1,19 @@
+<!-- res/drawable/tab_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Tab is selected -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <!-- Set the background color for the selected state -->
+            <solid android:color="#ebf5ff" />
+            <corners android:radius="14dp"/>
+        </shape>
+    </item>
+    <!-- Default state (unselected) -->
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Set the background color for the unselected state -->
+            <solid android:color="@color/white" />
+            <corners android:radius="14dp"/>
+        </shape>
+    </item>
+</selector>

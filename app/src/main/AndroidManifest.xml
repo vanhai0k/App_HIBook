@@ -6,8 +6,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -25,8 +23,8 @@
         <activity
             android:name=".Comment_Activity"
             android:exported="false"
-            android:label="@string/title_activity_comment"
-            android:theme="@style/Theme.App_Readbook" />
+            android:windowSoftInputMode="adjustPan"
+             />
         <activity
             android:name=".MainActivity"
             android:exported="false" />

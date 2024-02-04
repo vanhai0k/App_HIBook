@@ -17,15 +17,16 @@ import com.example.app_readbook.Image_Big
 import com.example.app_readbook.PersonalpageActivity
 import com.example.app_readbook.R
 import com.example.app_readbook.fragment.Home_Fragment
+import com.example.app_readbook.fragment_user.NouvellesFragment
 import com.example.app_readbook.`interface`.Interact
-import com.example.app_readbook.`interface`.Link.Companion.url_mage
+import com.example.app_readbook.`interface`.Link
 import com.example.app_readbook.model.LikePosts
 import com.example.app_readbook.model.ReadBook
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>, private val callback: Home_Fragment): RecyclerView.Adapter<PostsAdapter.ViewHolder>(){
+class NoulsAdapter (private val context: Context, var list: MutableList<ReadBook>, private val callback: NouvellesFragment): RecyclerView.Adapter<NoulsAdapter.ViewHolder>(){
 
     interface AdapterCallback {
         fun onLikeClicked(postId: String)
@@ -38,7 +39,7 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
         var username = v.findViewById<TextView>(R.id.username)
         var imagePost = v.findViewById<ImageView>(R.id.imagePost)
         var imagelikeback = v.findViewById<ImageView>(R.id.imagelikeback)
-//        var  title = v.findViewById<TextView>(R.id.title)
+        //        var  title = v.findViewById<TextView>(R.id.title)
         var content = v.findViewById<TextView>(R.id.content)
         var textlike = v.findViewById<TextView>(R.id.textlike)
         var time = v.findViewById<TextView>(R.id.time)
@@ -51,7 +52,6 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
         val  view = LayoutInflater.from(context).inflate(R.layout.iteam_posts,parent,false)
         return ViewHolder(view)
     }
-
     override fun getItemCount(): Int {
         return list.size
     }
@@ -59,31 +59,24 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val posts = list[position]
         holder.content.setText(posts.content)
-        Glide.with(context).load(url_mage + posts.image).into(holder.imagePost)
+        Glide.with(context).load(Link.url_mage + posts.image).into(holder.imagePost)
         holder.username.setText(posts.userID?.username?: "DefaultUsername")
-        Glide.with(context).load(url_mage + posts.userID?.image).into(holder.image)
+        Glide.with(context).load(Link.url_mage + posts.userID?.image).into(holder.image)
         holder.time.setText(posts.datepost)
         holder.image.setOnClickListener {
-            val intent = Intent(holder.itemView.context, PersonalpageActivity::class.java)
-
-            // Nếu bạn muốn truyền dữ liệu từ Activity cũ sang Activity mới, bạn có thể sử dụng putExtra
-            // intent.putExtra("key", value)
-            val buldle = Bundle()
-            intent.putExtra("id", posts._id)
-            intent.putExtra("username", posts.userID?.username)
-            intent.putExtra("image", posts.userID?.image)
-            intent.putExtra("user_idpost", posts.userID?._id)
-
-
-            intent.putExtras(buldle)
-            // Bắt đầu Activity mới
-            val sharedPreferences = context.getSharedPreferences("iduserNouls", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putString("user_idpost", posts.userID?._id)
-
-            editor.apply()
-
-            holder.itemView.context.startActivity(intent)
+//            val intent = Intent(holder.itemView.context, PersonalpageActivity::class.java)
+//
+//            // Nếu bạn muốn truyền dữ liệu từ Activity cũ sang Activity mới, bạn có thể sử dụng putExtra
+//            // intent.putExtra("key", value)
+//            val buldle = Bundle()
+//            intent.putExtra("id", posts._id)
+//            intent.putExtra("username", posts.userID?.username)
+//            intent.putExtra("image", posts.userID?.image)
+//
+//            intent.putExtras(buldle)
+//            // Bắt đầu Activity mới
+//
+//            holder.itemView.context.startActivity(intent)
         }
 
 
@@ -115,7 +108,6 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
             intent.putExtra("id", posts._id)
             intent.putExtra("username", posts.userID?.username)
             intent.putExtra("image", posts.userID?.image)
-            intent.putExtra("user_idpost", posts.userID?._id)
             intent.putExtra("imagepost", posts.image)
             intent.putExtra("datepost", posts.datepost)
             intent.putExtra("content", posts.content)

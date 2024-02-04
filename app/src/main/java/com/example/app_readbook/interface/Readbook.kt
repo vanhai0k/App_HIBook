@@ -22,6 +22,8 @@ interface Readbook {
 
     @GET("getReadbook")
     fun getReadbook(): Call<List<ReadBook>>
+    @GET("getReadbookUser/{user_id}")
+    fun getReadbookUser( @Path("user_id") user_id: String ): Call<List<ReadBook>>
 
 
     @GET("getComment/{postId}")

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".PersonalpageActivity">
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,6 +55,15 @@
                 />
         </LinearLayout>
     </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -98,5 +107,97 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </RelativeLayout>
+    <TextView
+        android:id="@+id/tvusername1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Khanh"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="15dp"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:background="@drawable/border_adduser"
+            android:padding="8dp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            >
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/addfriend"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm bạn bè"
+                android:textSize="18dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:background="@drawable/border_nhantin"
+            android:padding="8dp"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/messengerblack"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhắn tin"
+                android:textSize="18dp"
+                android:layout_marginLeft="8dp"
+                />
+        </LinearLayout>
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#d9dbe1"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        >
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/tabLayout"
+            app:tabMode="scrollable"
+            android:background="@color/white"
+            app:tabPadding="10dp"
+            app:tabSelectedTextColor="#0a65fd"
+            app:tabBackground="@drawable/color_tab"
+            app:tabIndicatorHeight="0dp"
+            android:layout_marginLeft="15dp"
+            />
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewPage"/>
+    </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
