@@ -8,4 +8,11 @@ data class User(
     var image: String?,
     var username: String?,
     var password: String?,
+    var request: List<SendFriends>?
+)
+data class SendFriends(
+    @SerializedName("_id")
+    val _id: String?,
+    val user_id: Any?,
+    val status: String?
 )

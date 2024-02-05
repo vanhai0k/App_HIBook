@@ -1,11 +1,14 @@
 package com.example.app_readbook.`interface`
 
+import com.example.app_readbook.model.User
 import com.google.gson.GsonBuilder
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface Users {
 
@@ -23,4 +26,7 @@ interface Users {
 
     @POST("login")
     suspend fun loginUser(@Body request: LoginRequest): Response<LoginResponse>
+
+    @GET("getUsersSend/{userID}")
+    suspend fun getUser(@Path("userID") userID: String): User
 }

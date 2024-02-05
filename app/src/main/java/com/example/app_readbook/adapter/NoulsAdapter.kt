@@ -63,8 +63,6 @@ class NoulsAdapter (private val context: Context, var list: MutableList<ReadBook
         holder.username.setText(posts.userID?.username?: "DefaultUsername")
         Glide.with(context).load(Link.url_mage + posts.userID?.image).into(holder.image)
         holder.time.setText(posts.datepost)
-        holder.image.setOnClickListener {
-        }
 
         val id_post: String = posts._id
         val likeList: List<LikePosts>? = posts.like ?: emptyList()
