@@ -42,7 +42,10 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
         var content = v.findViewById<TextView>(R.id.content)
         var textlike = v.findViewById<TextView>(R.id.textlike)
         var time = v.findViewById<TextView>(R.id.time)
+        var countLike = v.findViewById<TextView>(R.id.countLike)
+        var countcomment = v.findViewById<TextView>(R.id.countcomment)
         var linlerLike = v.findViewById<LinearLayout>(R.id.linlerLike)
+        var linnerCountComment = v.findViewById<LinearLayout>(R.id.linnerComment)
         var linnercomment = v.findViewById<LinearLayout>(R.id.linnercomment)
 
     }
@@ -63,6 +66,12 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
         holder.username.setText(posts.userID?.username?: "DefaultUsername")
         Glide.with(context).load(url_mage + posts.userID?.image).into(holder.image)
         holder.time.setText(posts.datepost)
+
+
+        val sharedPreferences = context.getSharedPreferences("UserLogin", Context.MODE_PRIVATE)
+        val iduser_Login = sharedPreferences.getString("iduser", null)
+
+
         holder.image.setOnClickListener {
             val intent = Intent(holder.itemView.context, PersonalpageActivity::class.java)
 
@@ -85,14 +94,19 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
 
             holder.itemView.context.startActivity(intent)
         }
+        val commentCounts = (posts.commentCount ?: 0)
+        if (commentCounts > 0){
+            holder.countcomment.text = "$commentCounts"
+        }else{
+            holder.linnerCountComment.visibility = View.GONE
+        }
 
 
         val id_post: String = posts._id
         val likeList: List<LikePosts>? = posts.like ?: emptyList()
 
 // Retrieve the currently logged-in user's ID from SharedPreferences
-        val sharedPreferences = context.getSharedPreferences("UserLogin", Context.MODE_PRIVATE)
-        val iduser_Login = sharedPreferences.getString("iduser", null)
+
 
 // Check if the currently logged-in user has liked the post
         val isUserLiked: Boolean = likeList?.any { it.user_id?._id == iduser_Login } ?: false
@@ -103,12 +117,21 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
                 .load(R.drawable.likecolor)
                 .into(holder.imagelikeback)
             holder.textlike.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaty))
+            val likeCount = (posts.likeCount ?: 0) - 1
+            if (likeCount > 0) {
+                holder.countLike.text = "Bạn, $likeCount người khác"
+            } else {
+                holder.countLike.text = "Bạn"
+            }
         } else {
             Glide.with(context)
                 .load(R.drawable.like)
                 .into(holder.imagelikeback)
             holder.textlike.setTextColor(ContextCompat.getColor(context, R.color.colorxam))
+            val likeCounts = (posts.likeCount ?: 0)
+            holder.countLike.text = "$likeCounts"
         }
+
         holder.linnercomment.setOnClickListener {
             val intent = Intent(holder.itemView.context, Comment_Activity::class.java)
             val buldle = Bundle()

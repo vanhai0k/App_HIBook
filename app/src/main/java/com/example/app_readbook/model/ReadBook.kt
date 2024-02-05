@@ -13,8 +13,9 @@ data class ReadBook(
     var like: List<LikePosts>?,
     var comment: List<CommentPosts>?,
 //    var comment: CommentPosts?,
-    var datepost: String?
-
+    var datepost: String?,
+    var likeCount: Int?,
+    var commentCount: Int?
 )
 data class LikePosts(
     @SerializedName("_id")

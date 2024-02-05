@@ -34,18 +34,18 @@ class NoulsAdapter (private val context: Context, var list: MutableList<ReadBook
 
 
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v){
-
         var image = v.findViewById<ImageView>(R.id.image)
         var username = v.findViewById<TextView>(R.id.username)
         var imagePost = v.findViewById<ImageView>(R.id.imagePost)
         var imagelikeback = v.findViewById<ImageView>(R.id.imagelikeback)
-        //        var  title = v.findViewById<TextView>(R.id.title)
         var content = v.findViewById<TextView>(R.id.content)
         var textlike = v.findViewById<TextView>(R.id.textlike)
         var time = v.findViewById<TextView>(R.id.time)
+        var countLike = v.findViewById<TextView>(R.id.countLike)
+        var countcomment = v.findViewById<TextView>(R.id.countcomment)
         var linlerLike = v.findViewById<LinearLayout>(R.id.linlerLike)
+        var linnerCountComment = v.findViewById<LinearLayout>(R.id.linnerComment)
         var linnercomment = v.findViewById<LinearLayout>(R.id.linnercomment)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -64,21 +64,7 @@ class NoulsAdapter (private val context: Context, var list: MutableList<ReadBook
         Glide.with(context).load(Link.url_mage + posts.userID?.image).into(holder.image)
         holder.time.setText(posts.datepost)
         holder.image.setOnClickListener {
-//            val intent = Intent(holder.itemView.context, PersonalpageActivity::class.java)
-//
-//            // Nếu bạn muốn truyền dữ liệu từ Activity cũ sang Activity mới, bạn có thể sử dụng putExtra
-//            // intent.putExtra("key", value)
-//            val buldle = Bundle()
-//            intent.putExtra("id", posts._id)
-//            intent.putExtra("username", posts.userID?.username)
-//            intent.putExtra("image", posts.userID?.image)
-//
-//            intent.putExtras(buldle)
-//            // Bắt đầu Activity mới
-//
-//            holder.itemView.context.startActivity(intent)
         }
-
 
         val id_post: String = posts._id
         val likeList: List<LikePosts>? = posts.like ?: emptyList()
@@ -96,12 +82,21 @@ class NoulsAdapter (private val context: Context, var list: MutableList<ReadBook
                 .load(R.drawable.likecolor)
                 .into(holder.imagelikeback)
             holder.textlike.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaty))
+            val likeCount = (posts.likeCount ?: 0) - 1
+            if (likeCount > 0) {
+                holder.countLike.text = "Bạn, $likeCount người khác"
+            } else {
+                holder.countLike.text = "Bạn"
+            }
         } else {
             Glide.with(context)
                 .load(R.drawable.like)
                 .into(holder.imagelikeback)
             holder.textlike.setTextColor(ContextCompat.getColor(context, R.color.colorxam))
+            val likeCounts = (posts.likeCount ?: 0)
+            holder.countLike.text = "$likeCounts"
         }
+
         holder.linnercomment.setOnClickListener {
             val intent = Intent(holder.itemView.context, Comment_Activity::class.java)
             val buldle = Bundle()
@@ -114,28 +109,19 @@ class NoulsAdapter (private val context: Context, var list: MutableList<ReadBook
             intent.putExtra("isUserLiked", isUserLiked)
             intent.putExtra("idpost", posts._id)
             intent.putExtras(buldle)
-            // Bắt đầu Activity mới
-
             holder.itemView.context.startActivity(intent)
         }
         holder.imagePost.setOnClickListener {
             val intent = Intent(holder.itemView.context, Image_Big::class.java)
-
-            // Nếu bạn muốn truyền dữ liệu từ Activity cũ sang Activity mới, bạn có thể sử dụng putExtra
-            // intent.putExtra("key", value)
             val buldle = Bundle()
             intent.putExtra("id", posts._id)
             intent.putExtra("imagepost", posts.image)
             intent.putExtras(buldle)
-            // Bắt đầu Activity mới
-
             holder.itemView.context.startActivity(intent)
         }
-
         holder.linlerLike.setOnClickListener{
             if (iduser_Login != null) {
                 val likeRequest = Interact.LikeRequest(user_id = iduser_Login)
-
                 val retofit = Interact.retrofit.create(Interact::class.java)
                 val call = retofit.likeNols(id_post, likeRequest)
                 call.enqueue(object : Callback<Interact.LikeRequest> {
@@ -151,31 +137,19 @@ class NoulsAdapter (private val context: Context, var list: MutableList<ReadBook
                             }
                         }
                     }
-
                     override fun onFailure(call: Call<Interact.LikeRequest>, t: Throwable) {
                         TODO("Not yet implemented")
                     }
-
                 })
             }
-
         }
-
-
     }
     fun updateData() {
-        // Cập nhật dữ liệu (ví dụ: list) mà không cần dữ liệu mới
-        // Điều này chỉ hữu ích nếu bạn có thể tái sử dụng phương thức này mà không cần dữ liệu mới
-
-        // Thông báo cho Adapter biết rằng dữ liệu đã thay đổi
         notifyDataSetChanged()
     }
     fun updateData(newList: List<ReadBook>) {
-        // Cập nhật dữ liệu (ví dụ: list) với dữ liệu mới được truyền vào
-        list.clear() // Xóa toàn bộ dữ liệu cũ
-        list.addAll(newList) // Thêm dữ liệu mới
-
-        // Thông báo cho Adapter biết rằng dữ liệu đã thay đổi
+        list.clear()
+        list.addAll(newList)
         notifyDataSetChanged()
     }
 }

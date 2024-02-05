@@ -36,6 +36,8 @@ interface Interact {
         val message: String,
         val nouvelle: CommentNould // You need to define the Nouvelle data class
     )
+    data class LikeCountResponse(val likeCount: Int)
+
 
     @POST("likePost/{postId}")
     fun likeNols(
@@ -48,4 +50,7 @@ interface Interact {
         @Path("nouvelleId") nouvelleId: String,
         @Body commentNould: CommentNould
     ): Call<CommentApiResponse>
+
+    @GET("/countLikes/{postId}")
+    fun countLikes(@Path("postId") postId: String): Call<LikeCountResponse>
 }
