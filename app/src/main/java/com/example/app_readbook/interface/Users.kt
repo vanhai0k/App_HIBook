@@ -22,11 +22,14 @@ interface Users {
     }
     data class LoginRequest(val username: String, val password: String)
 
-    data class LoginResponse(val message: String, val token: String,val _id: String,)
+    data class LoginResponse(val message: String, val token: String,
+                             val _id: String,val friendsCount: Int)
 
     @POST("login")
     suspend fun loginUser(@Body request: LoginRequest): Response<LoginResponse>
 
     @GET("getUsersSend/{userID}")
     suspend fun getUser(@Path("userID") userID: String): User
+
+
 }

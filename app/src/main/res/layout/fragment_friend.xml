@@ -53,6 +53,7 @@
             android:padding="8dp"
             android:gravity="center"
             android:layout_gravity="center"
+            android:id="@+id/linnerFriend"
             >
             <TextView
                 android:layout_width="wrap_content"

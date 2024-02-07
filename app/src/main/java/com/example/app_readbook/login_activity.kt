@@ -139,6 +139,7 @@ class login_activity : AppCompatActivity() {
                     val message = loginResponse?.message
                     val token = loginResponse?.token
                     val iduser = loginResponse?._id
+                    val friendsCounts = loginResponse?.friendsCount
 
                     // Perform actions based on the response
                     // For example, update UI, save token to shared preferences, navigate to the next screen, etc.
