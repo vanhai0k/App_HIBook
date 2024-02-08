@@ -1,7 +1,9 @@
 package com.example.app_readbook.`interface`
 
+import com.example.app_readbook.model.MessageModel
 import com.example.app_readbook.model.User
 import com.google.gson.GsonBuilder
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,5 +33,7 @@ interface Users {
     @GET("getUsersSend/{userID}")
     suspend fun getUser(@Path("userID") userID: String): User
 
+    @GET("getMessage/{userId}")
+    fun getMessage(@Path("userId") userId: String): Call<List<MessageModel>>
 
 }

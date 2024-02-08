@@ -7,7 +7,7 @@ import com.example.app_readbook.fragment.FriendFragment
 import com.example.app_readbook.fragment.Home_Fragment
 import com.example.app_readbook.fragment.NotificationFragment
 import com.example.app_readbook.fragment.Setting_Fragment
-import com.example.app_readbook.fragment.VideoFragment
+import com.example.app_readbook.fragment.ChatMessageFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val notificationFragment = NotificationFragment()
         notificationFragment.arguments = bundle
 
-        val videoFragment = VideoFragment()
+        val videoFragment = ChatMessageFragment()
         videoFragment.arguments = bundle
 
         replaceFragment(homeFragment)
@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         navigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> replaceFragment(homeFragment)
-                R.id.nav_event -> replaceFragment(videoFragment)
                 R.id.nav_eventme -> replaceFragment(friendFragment)
+                R.id.nav_event -> replaceFragment(videoFragment)
                 R.id.nav_chat -> replaceFragment(notificationFragment)
                 R.id.nav_setting -> replaceFragment(settingFragment)
             }

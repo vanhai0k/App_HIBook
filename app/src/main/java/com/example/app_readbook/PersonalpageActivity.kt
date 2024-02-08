@@ -1,6 +1,7 @@
 package com.example.app_readbook
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -37,6 +38,7 @@ class PersonalpageActivity : AppCompatActivity() {
     lateinit var linnerMe:LinearLayout
     lateinit var linnerUser:LinearLayout
     lateinit var addFriend:LinearLayout
+    lateinit var linnerMessage:LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personalpage)
@@ -49,7 +51,12 @@ class PersonalpageActivity : AppCompatActivity() {
         linnerMe = findViewById(R.id.linnerMe)
         linnerUser = findViewById(R.id.linnerUser)
         addFriend = findViewById(R.id.addFriend)
+        linnerMessage = findViewById(R.id.linnerMessage)
+        linnerMessage.setOnClickListener {
+            val intent = Intent(baseContext,ChatMessage_MainActivity::class.java)
 
+            startActivity(intent)
+        }
 
         val viewPager: ViewPager2 = findViewById(R.id.viewPage)
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)

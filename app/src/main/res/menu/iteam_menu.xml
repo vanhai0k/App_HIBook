@@ -2,21 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/nav_home"
-        android:title="Home"
-        android:icon="@drawable/chat"/>
-
-    <item android:id="@+id/nav_event"
-        android:title="Post Event"
-        android:icon="@drawable/chat"/>
-
+        android:title="Trang chủ"
+        android:icon="@drawable/home"/>
     <item android:id="@+id/nav_eventme"
-        android:title="Event Me"
-        android:icon="@drawable/chat"/>
+        android:title="Bạn bè"
+        android:icon="@drawable/addfriend"/>
+    <item android:id="@+id/nav_event"
+        android:title="Message"
+        android:icon="@drawable/messengerblack"/>
+
     <item android:id="@+id/nav_chat"
-        android:title="Chat"
+        android:title="Thông báo"
         android:icon="@drawable/chat"/>
 
     <item android:id="@+id/nav_setting"
-        android:title="Setting"
-        android:icon="@drawable/chat"/>
+        android:title="Cài đặt"
+        android:icon="@drawable/settings"/>
 </menu>
