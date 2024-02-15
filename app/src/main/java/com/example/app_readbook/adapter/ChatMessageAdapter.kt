@@ -53,21 +53,33 @@ class ChatMessageAdapter (val context: Context, val list: MutableList<MessageMod
         val sharedPreferences = context?.getSharedPreferences("UserLogin", Context.MODE_PRIVATE)
         val iduser = sharedPreferences?.getString("iduser", null).toString()
 
-        holder.username.setText(friend.receiver?.username)
-        Glide.with(context).load(Link.url_mage + friend.receiver?.image).into(holder.image)
+        var idUserRece = friend.receiver?._id
+        if (iduser.equals(idUserRece)){
+            holder.username.setText(friend.sender?.username)
+            Glide.with(context).load(Link.url_mage + friend.sender?.image).into(holder.image)
+        }else{
+            holder.username.setText(friend.receiver?.username)
+            Glide.with(context).load(Link.url_mage + friend.receiver?.image).into(holder.image)
+        }
+
+
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context,ChatMessage_MainActivity::class.java)
 
             val bundle = Bundle()
-
-            intent.putExtra("idfriendMess", friend.receiver?._id)
-            intent.putExtra("namefriendMess", friend.receiver?.username)
-            intent.putExtra("imagefriendMess", friend.receiver?.image)
-//            intent.putExtra("time", friend.receiver?.image)
-
-            intent.putExtras(bundle)
-
+            if (iduser.equals(idUserRece)) {
+                intent.putExtra("idfriendMess", friend.sender?._id)
+                intent.putExtra("namefriendMess", friend.sender?.username)
+                intent.putExtra("imagefriendMess", friend.sender?.image)
+                intent.putExtras(bundle)
+            }
+            else{
+                intent.putExtra("idfriendMess", friend.receiver?._id)
+                intent.putExtra("namefriendMess", friend.receiver?.username)
+                intent.putExtra("imagefriendMess", friend.receiver?.image)
+                intent.putExtras(bundle)
+            }
             context.startActivity(intent)
         }
     }

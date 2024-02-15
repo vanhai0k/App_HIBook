@@ -36,4 +36,16 @@ interface Users {
     @GET("getMessage/{userId}")
     fun getMessage(@Path("userId") userId: String): Call<List<MessageModel>>
 
+
+    data class MessageChat(
+        val user_id: User,
+        val message: String,
+        val timestamp: String
+    )
+    @GET("getMessage/{userId}")
+    fun getChatMessage(@Path("userId") userId: String): Call<List<MessageModel>>
+    @GET("getChatMessage/{userId}")
+        fun getChatMessageFriend(@Path("userId") userId: String): Call<List<MessageModel>>
+
+
 }

@@ -96,7 +96,7 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
         }
         val commentCounts = (posts.commentCount ?: 0)
         if (commentCounts > 0){
-            holder.countcomment.text = "$commentCounts"
+            holder.countcomment.text = commentCounts.toString()
         }else{
             holder.linnerCountComment.visibility = View.GONE
         }
