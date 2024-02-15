@@ -133,7 +133,7 @@
             android:padding="5dp">
 
             <EditText
-                android:id="@+id/contentComment"
+                android:id="@+id/contentMess"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"

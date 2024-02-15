@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.example.app_readbook.`interface`.Users
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 class login_activity : AppCompatActivity() {
     lateinit var usernameEditText: EditText
     lateinit var passwordEditText: EditText
-    lateinit var loginButton: Button
+    lateinit var loginButton: TextView
     lateinit var savepass: CheckBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,7 @@ class login_activity : AppCompatActivity() {
 
          usernameEditText = findViewById<EditText>(R.id.editTextUsername)
          passwordEditText = findViewById<EditText>(R.id.editTextPassword)
-         loginButton = findViewById<Button>(R.id.buttonLogin)
+         loginButton = findViewById<TextView>(R.id.buttonLogin)
          savepass  = findViewById<CheckBox>(R.id.savePasswordCheckBox)
 
         loginButton.setOnClickListener {

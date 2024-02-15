@@ -47,5 +47,24 @@ interface Users {
     @GET("getChatMessage/{userId}")
         fun getChatMessageFriend(@Path("userId") userId: String): Call<List<MessageModel>>
 
+    data class MessageData(
+        val sender: String,
+        val receiver: String,
+        val messages: List<Message>
+    )
 
+    data class Message(
+        val user_id: String,
+        val message: String
+    )
+
+    data class MessageResponse(
+        val message: Message, // Assuming your backend returns the saved message object
+        val success: Boolean
+    )
+
+
+
+    @POST("sendMessage") // Adjust the URL based on your backend
+    fun sendMessage(@Body messageData: MessageData): Call<MessageResponse>
 }

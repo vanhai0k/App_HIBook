@@ -2,6 +2,7 @@ package com.example.app_readbook
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,14 +26,18 @@ class ChatMessage_MainActivity : AppCompatActivity() {
     lateinit var usernamefiend: TextView
     lateinit var imageFriend:ImageView
     lateinit var imageback:ImageView
+    lateinit var imageLike:ImageView
     lateinit var recyclerView:RecyclerView
     lateinit var adapter: MessageAdapter
     lateinit var idfriendMess:String
+    lateinit var contentMess:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_message_main)
 
         imageback = findViewById(R.id.imageback)
+        imageLike = findViewById(R.id.imageLike)
+        contentMess = findViewById(R.id.contentMess)
         imageFriend = findViewById(R.id.imageFriend)
         usernamefiend = findViewById(R.id.usernamefiend)
         recyclerView = findViewById(R.id.recyclerview)
@@ -60,8 +65,48 @@ class ChatMessage_MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("UserLogin", MODE_PRIVATE)
         iduser = sharedPreferences?.getString("iduser", null).toString()
 
+
+        imageLike.setOnClickListener {
+            chatMessage()
+        }
+
         getData()
     }
+
+    private fun chatMessage() {
+
+        val content = contentMess.text.toString()
+
+        val apiService = Users.retrofit.create(Users::class.java)
+        val messageData = Users.MessageData(iduser, idfriendMess, listOf(
+            Users.Message(
+                iduser,
+                content
+            )
+        ))
+
+        val call = apiService.sendMessage(messageData)
+        call.enqueue(object : Callback<Users.MessageResponse> {
+            override fun onResponse(call: Call<Users.MessageResponse>, response: Response<Users.MessageResponse>) {
+                if (response.isSuccessful) {
+                    val messageResponse = response.body()
+                    // Handle success
+                    contentMess.setText("")
+                    adapter.notifyDataSetChanged()
+                    getData()
+                    recyclerView.scrollToPosition(adapter.itemCount - 1)
+                }
+                else {
+                    // Handle error
+                }
+            }
+
+            override fun onFailure(call: Call<Users.MessageResponse>, t: Throwable) {
+                // Handle failure
+            }
+        })
+    }
+
     private lateinit var iduser:String
     private fun getData() {
         val apiService = Users.retrofit.create(Users::class.java)
@@ -76,6 +121,7 @@ class ChatMessage_MainActivity : AppCompatActivity() {
                         val messageFriends =
                             it.flatMap { messageModel -> messageModel.toMessageFriends() }
                         adapter.updateData(messageFriends)
+                        recyclerView.scrollToPosition(adapter.itemCount - 1)
                     }
                 }else {
                     Toast.makeText(this@ChatMessage_MainActivity,"faillll", Toast.LENGTH_SHORT).show()

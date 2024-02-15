@@ -2,11 +2,14 @@ package com.example.app_readbook.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,12 +24,15 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.Normalizer
+import java.util.regex.Pattern
 
 
 class ChatMessageFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var rootView: View
     private lateinit var adapter : ChatMessageAdapter
+    lateinit var edt_timkiem:EditText
 
     private lateinit var iduser:String
     override fun onCreateView(
@@ -39,10 +45,15 @@ class ChatMessageFragment : Fragment() {
         iduser = sharedPreferences?.getString("iduser", null).toString()
 
         recyclerView = rootView.findViewById(R.id.recyclerView)
+        edt_timkiem = rootView.findViewById(R.id.edt_timkiem)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = ChatMessageAdapter(requireContext(), mutableListOf(), this)
         recyclerView.adapter = adapter
+
+
         getData()
+
+
         return rootView
     }
 
@@ -74,6 +85,7 @@ class ChatMessageFragment : Fragment() {
         })
 
     }
+
     override fun onResume() {
         super.onResume()
         getData()
