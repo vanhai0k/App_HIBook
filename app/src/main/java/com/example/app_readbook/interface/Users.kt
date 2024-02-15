@@ -25,7 +25,7 @@ interface Users {
     data class LoginRequest(val username: String, val password: String)
 
     data class LoginResponse(val message: String, val token: String,
-                             val _id: String,val friendsCount: Int)
+                             val _id: String,val image: String)
 
     @POST("login")
     suspend fun loginUser(@Body request: LoginRequest): Response<LoginResponse>

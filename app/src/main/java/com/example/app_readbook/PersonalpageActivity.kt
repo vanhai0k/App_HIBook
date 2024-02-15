@@ -39,9 +39,16 @@ class PersonalpageActivity : AppCompatActivity() {
     lateinit var linnerUser:LinearLayout
     lateinit var addFriend:LinearLayout
     lateinit var linnerMessage:LinearLayout
+    lateinit var name:String
+    lateinit var img:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personalpage)
+
+
+        val sharedPreferences = getSharedPreferences("UserLogin", Context.MODE_PRIVATE)
+        iduser_Login = sharedPreferences.getString("iduser", null).toString()
+
 
         overlayImageView = findViewById(R.id.overlayImageView)
         tvusername = findViewById(R.id.tvusername)
@@ -52,11 +59,7 @@ class PersonalpageActivity : AppCompatActivity() {
         linnerUser = findViewById(R.id.linnerUser)
         addFriend = findViewById(R.id.addFriend)
         linnerMessage = findViewById(R.id.linnerMessage)
-        linnerMessage.setOnClickListener {
-            val intent = Intent(baseContext,ChatMessage_MainActivity::class.java)
 
-            startActivity(intent)
-        }
 
         val viewPager: ViewPager2 = findViewById(R.id.viewPage)
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
@@ -78,14 +81,14 @@ class PersonalpageActivity : AppCompatActivity() {
         back.setOnClickListener {
             onBackPressed()
         }
-        val sharedPreferences = getSharedPreferences("UserLogin", Context.MODE_PRIVATE)
-        iduser_Login = sharedPreferences.getString("iduser", null).toString()
+
 //        cach nhan
         val receBundle : Bundle? = intent.extras
+
         if (receBundle != null) {
             val id = receBundle.getString("id").toString()
-            val name = receBundle.getString("username")
-            val img = receBundle.getString("image")
+            name = receBundle.getString("username").toString()
+            img = receBundle.getString("image").toString()
             id_userpost = receBundle.getString("user_idpost").toString()
 
             if (iduser_Login.equals(id_userpost)){
@@ -100,6 +103,17 @@ class PersonalpageActivity : AppCompatActivity() {
             tvusername1.setText(name)
             Glide.with(this).load(Link.url_mage + img).into(overlayImageView)
 
+        }
+        linnerMessage.setOnClickListener {
+            val intent = Intent(baseContext,ChatMessage_MainActivity::class.java)
+
+            val bundle = Bundle()
+            intent.putExtra("idfriendMess", id_userpost)
+            intent.putExtra("namefriendMess", name)
+            intent.putExtra("imagefriendMess", img)
+            intent.putExtras(bundle)
+
+            startActivity(intent)
         }
 
         callCheckFriend()

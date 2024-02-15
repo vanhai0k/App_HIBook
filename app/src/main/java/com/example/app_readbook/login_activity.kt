@@ -140,7 +140,7 @@ class login_activity : AppCompatActivity() {
                     val message = loginResponse?.message
                     val token = loginResponse?.token
                     val iduser = loginResponse?._id
-                    val friendsCounts = loginResponse?.friendsCount
+                    val image = loginResponse?.image
 
                     // Perform actions based on the response
                     // For example, update UI, save token to shared preferences, navigate to the next screen, etc.
@@ -152,6 +152,7 @@ class login_activity : AppCompatActivity() {
                     editText.putString("username",username)
                     editText.putString("password",password)
                     editText.putString("iduser",iduser)
+                    editText.putString("image",image)
                     editText.apply()
                     Toast.makeText(baseContext, "Login successful", Toast.LENGTH_SHORT).show()
 

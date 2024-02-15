@@ -36,6 +36,7 @@ class ChatMessageAdapter (val context: Context, val list: MutableList<MessageMod
         val username = v.findViewById<TextView>(R.id.usernameFriend)
         val image = v.findViewById<ImageView>(R.id.imageFriend)
         val time = v.findViewById<TextView>(R.id.time)
+        val tinnhan = v.findViewById<TextView>(R.id.tinnhan)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -61,6 +62,25 @@ class ChatMessageAdapter (val context: Context, val list: MutableList<MessageMod
             holder.username.setText(friend.receiver?.username)
             Glide.with(context).load(Link.url_mage + friend.receiver?.image).into(holder.image)
         }
+
+        val lastMessage = friend.messages.lastOrNull()
+        val messageContent = lastMessage?.message ?: ""
+
+        val truncatedMessage = if (messageContent.length > 30) {
+            messageContent.substring(0, 30) + "..."
+        } else {
+            messageContent
+        }
+
+        val isCurrentUserSender = lastMessage?.user_id?._id == iduser
+
+        val messageToShow = if (isCurrentUserSender) {
+            "Bạn: $truncatedMessage"
+        } else {
+            truncatedMessage
+        }
+
+        holder.tinnhan.text = messageToShow
 
 
 
