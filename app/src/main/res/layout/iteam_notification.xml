@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#e7f3ff"
+    android:id="@+id/linnerColor"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageUserNotifi"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/anh5"
+            android:scaleType="centerCrop"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:layout_gravity="center"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/usernameNotifi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Kha An "
+                    android:textSize="16.6dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" thích ảnh bạn"
+                    android:textSize="16dp"
+                    />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/contentNol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nay di choi vui nhi"
+                android:textSize="16dp"
+                />
+            <TextView
+                android:id="@+id/datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8h"
+                android:textSize="16dp"
+                android:layout_marginBottom="8dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -79,7 +79,7 @@ class Home_Fragment : Fragment() {
 
     private fun getData() {
         val retrofit = Readbook.retrofit.create(Readbook::class.java)
-        val call = retrofit.getReadbook();
+        val call = retrofit.getReadbook()
         call.enqueue(object : retrofit2.Callback<List<ReadBook>> {
             override fun onResponse(
                 call: Call<List<ReadBook>>,

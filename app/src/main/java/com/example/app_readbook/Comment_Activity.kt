@@ -237,20 +237,9 @@ class Comment_Activity : AppCompatActivity() {
     }
     private val MY_REQUEST_CODE = 102
     private val PICK_IMAGE_REQUEST = 1
-
-//    private fun openGallery() {
-//        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST)
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-//            val selectedImageUri = data.data
-//            // Display the selected image in an ImageView (replace 'imageView' with your ImageView's id)
-//            img_view.setImageURI(selectedImageUri)
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
 
 }

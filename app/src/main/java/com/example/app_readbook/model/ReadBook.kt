@@ -12,10 +12,17 @@ data class ReadBook(
     var status: String?,
     var like: List<LikePosts>?,
     var comment: List<CommentPosts>?,
-//    var comment: CommentPosts?,
+    var notification: List<NotificationPost>?,
     var datepost: String?,
     var likeCount: Int?,
     var commentCount: Int?
+)
+data class NotificationPost(
+    @SerializedName("_id")
+    val _id: String,
+    val user_id: User?,
+    var statusSend: String?,
+    var datetime: String?,
 )
 data class LikePosts(
     @SerializedName("_id")
@@ -24,6 +31,7 @@ data class LikePosts(
     var status: String?,
     var like: List<LikePosts>
 )
+
 data class CommentPosts(
     @SerializedName("_id")
     val _id: String,

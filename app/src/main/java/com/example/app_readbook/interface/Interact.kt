@@ -1,10 +1,6 @@
 package com.example.app_readbook.`interface`
 
-import com.example.app_readbook.model.ReadBook
-import com.example.app_readbook.model.User
 import com.google.gson.GsonBuilder
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -65,6 +61,6 @@ interface Interact {
     ): Call<ConfirmFriend>
     @POST("sendfriend/{friendId}")
     fun sendfriend(@Path("friendId") friendId: String,
-                      @Body sendfriend: Sendfriend
+                   @Body sendfriend: Sendfriend
     ): Call<Sendfriend>
 }

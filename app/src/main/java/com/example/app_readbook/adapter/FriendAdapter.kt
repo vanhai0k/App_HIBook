@@ -58,10 +58,6 @@ class FriendAdapter (val context: Context, val list: MutableList<User>,private v
                 }
                 holder.username.text = username ?: "No Username"
 
-
-
-
-
                 Glide.with(context)
                     .load(Link.url_mage +imageUser ?: R.drawable.ic_launcher_foreground)
                     .placeholder(R.drawable.ic_launcher_foreground)

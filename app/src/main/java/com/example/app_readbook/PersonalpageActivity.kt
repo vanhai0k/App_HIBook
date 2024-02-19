@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.example.app_readbook.`interface`.Interact
 import com.example.app_readbook.`interface`.Link
+import com.example.app_readbook.`interface`.Readbook
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import retrofit2.Call
@@ -117,6 +118,7 @@ class PersonalpageActivity : AppCompatActivity() {
         }
 
         callCheckFriend()
+        callCheckFriendBB()
     }
 
     private fun callCheckFriend() {
@@ -144,8 +146,6 @@ class PersonalpageActivity : AppCompatActivity() {
                     val userID_request = requestObj.getString("user_id")
                     userRequests.add(userID_request)
                 }
-
-
                 // Kiểm tra xem id_userpost có trong danh sách bạn bè hay không
                 if (userFriendIds.contains(id_userpost)) {
                     title.setText("Bạn bè")
@@ -167,7 +167,8 @@ class PersonalpageActivity : AppCompatActivity() {
                             }
                             .show() // Hiển thị dialog
                      }
-                }else{
+                }
+                else{
                     title.setText("Thêm bạn bè")
                     addFriend.setOnClickListener {
                         addFriends()
@@ -182,15 +183,90 @@ class PersonalpageActivity : AppCompatActivity() {
 // Thêm yêu cầu vào hàng đợi
         queue.add(jsonObjectRequest)
     }
+    lateinit var id_send_friend:String
+    private fun callCheckFriendBB() {
+        val url = Link.url + "getUserCheckFrend/"+ id_userpost
+
+        val queue = Volley.newRequestQueue(baseContext)
+        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
+            { response ->
+
+                val friendsArray = response.getJSONArray("friends")
+                val userFriendIds = mutableListOf<String>()
+
+                // Lặp qua mảng bạn bè để lấy thông tin
+                for (i in 0 until friendsArray.length()) {
+                    val friendObj = friendsArray.getJSONObject(i)
+                    val userFriendId = friendObj.getString("user_friend")
+                    userFriendIds.add(userFriendId)
+                }
+                val requestArray = response.getJSONArray("request")
+                val userRequests = mutableListOf<String>()
+
+                // Lặp qua mảng bạn bè để lấy thông tin
+                for (i in 0 until requestArray.length()) {
+                    val requestObj = requestArray.getJSONObject(i)
+                    val userID_request = requestObj.getString("user_id")
+                    id_send_friend = requestObj.getString("_id")
+                    userRequests.add(userID_request)
+                }
+                // Kiểm tra xem id_userpost có trong danh sách bạn bè hay không
+               if (userRequests.contains(iduser_Login)){
+                    title.setText("Hủy lời mời")
+                    addFriend.setOnClickListener {
+                        AlertDialog.Builder(this)
+                            .setTitle("thông báo")
+                            .setMessage("Bạn có muốn hủy lời mời kết bạn không?")
+                            .setPositiveButton("Đồng ý") { dialog, _ ->
+
+                                huyketban()
+
+                                dialog.dismiss() // Dismiss dialog trước khi thực hiện hành động khác
+
+                            }
+                            .setNegativeButton("Hủy bỏ") { dialog, _ ->
+                                // Thực hiện hành động khi người dùng chọn hủy bỏ
+                                dialog.dismiss() // Dismiss dialog
+                            }
+                            .show() // Hiển thị dialog
+                    }
+                }
+            },
+            { error ->
+                // Xử lý khi có lỗi xảy ra
+            }
+        )
+
+// Thêm yêu cầu vào hàng đợi
+        queue.add(jsonObjectRequest)
+    }
+
+    private fun huyketban() {
+        val retrofit = Readbook.retrofit.create(Readbook::class.java)
+        val call = retrofit.deleteSendFriend(id_userpost,id_send_friend)
+        call.enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    // Xử lý khi API thành công
+                    title.setText("Thêm bạn bè")
+
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(baseContext,"Fail", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
 
     private fun addFriends() {
         val usersService = Interact.retrofit.create(Interact::class.java)
         val friendId = iduser_Login // ID của người bạn muốn thêm vào danh sách bạn bè
-        val sendfriend = Interact.Sendfriend(friendId) // Tạo đối tượng Sendfriend
 
+        val friend = Interact.Sendfriend(id_userpost)
         // Gửi yêu cầu thêm bạn bè đến API
-        id_userpost?.let { userId ->
-            val call = usersService.sendfriend(userId, sendfriend)
+            val call = usersService.sendfriend( friendId, friend)
             call.enqueue(object : Callback<Interact.Sendfriend> {
                 override fun onResponse(
                     call: Call<Interact.Sendfriend>,
@@ -209,7 +285,6 @@ class PersonalpageActivity : AppCompatActivity() {
                     Log.d("send", "onFailure: $t")
                 }
             })
-        }
     }
 
 }

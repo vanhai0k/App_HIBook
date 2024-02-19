@@ -94,11 +94,16 @@ class SendfriendAdapter(val context: Context, val list: MutableList<User>,
                             call: Call<Interact.ConfirmFriend>,
                             response: Response<Interact.ConfirmFriend>
                         ) {
-                            if (response.isSuccessful){
-                                list.removeAt(position)
-                                notifyDataSetChanged()
-                                Toast.makeText(context,"Đã thành bạn bè",Toast.LENGTH_SHORT).show()
+                            list.let {
+                                if (position in 0 until it.size) { // Check if position is within bounds
+                                    it.removeAt(position)
+                                    notifyDataSetChanged()
+                                    Toast.makeText(context, "Đã thành bạn bè", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Log.e("SendfriendAdapter", "Invalid position: $position, List size: ${it.size}")
+                                }
                             }
+
                         }
 
                         override fun onFailure(call: Call<Interact.ConfirmFriend>, t: Throwable) {
