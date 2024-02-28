@@ -159,43 +159,52 @@
                 android:src="@drawable/heart"
                 />
             <TextView
+                android:id="@+id/countLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15,4K"
                 android:layout_marginLeft="8dp"
                 android:textColor="#7E7E7E"
-                android:textSize="16dp"
+                android:textSize="14dp"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1.2"
             android:gravity="right"
             >
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="154"
-                android:layout_marginLeft="8dp"
-                android:textColor="#7E7E7E"
-                android:textSize="16dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="bình luận"
-                android:layout_marginLeft="8dp"
-                android:textColor="#7E7E7E"
-                android:textSize="16dp"
-                />
+                android:orientation="horizontal"
+                android:id="@+id/linnerComment"
+                >
+                <TextView
+                    android:id="@+id/countcomment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="154"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="#7E7E7E"
+                    android:textSize="14dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="bình luận"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="#7E7E7E"
+                    android:textSize="14dp"
+                    />
+            </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="35"
                 android:layout_marginLeft="8dp"
                 android:textColor="#7E7E7E"
-                android:textSize="16dp"
+                android:textSize="14dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -203,7 +212,7 @@
                 android:text="lượt chia sẻ"
                 android:layout_marginLeft="8dp"
                 android:textColor="#7E7E7E"
-                android:textSize="16dp"
+                android:textSize="14dp"
                 />
         </LinearLayout>
     </LinearLayout>

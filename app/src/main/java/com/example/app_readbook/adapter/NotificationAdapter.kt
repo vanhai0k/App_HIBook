@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.app_readbook.Comment_Activity
@@ -48,6 +49,10 @@ class NotificationAdapter (private val context: Context, var list: MutableList<R
         val noitifi = list[position]
         val notifications = noitifi.notification
 
+        val commentCounts = (noitifi.commentCount ?: 0)
+
+        Toast.makeText(context,"$commentCounts", Toast.LENGTH_SHORT).show()
+
 
         if (!notifications.isNullOrEmpty()) {
             (holder.itemView as ViewGroup).removeAllViews()
@@ -77,6 +82,7 @@ class NotificationAdapter (private val context: Context, var list: MutableList<R
                     notificationtViewHolder.linnerColor.setBackgroundColor(Color.WHITE)
 
                 }
+
                 val id = noitifi._id
                 val idnotification = notification._id
                 val sharedPreferences = context.getSharedPreferences("UserLogin", Context.MODE_PRIVATE)
@@ -85,6 +91,9 @@ class NotificationAdapter (private val context: Context, var list: MutableList<R
 // Retrieve the currently logged-in user's ID from SharedPreferences
 // Check if the currently logged-in user has liked the post
                 val isUserLiked: Boolean = likeList?.any { it.user_id?._id == iduser_Login } ?: false
+
+
+
                 holder.itemView.setOnClickListener {
                     val retrofit = Readbook.retrofit.create(Readbook::class.java)
                     val call = retrofit.updateNotificationStatus(id,idnotification)
@@ -104,8 +113,11 @@ class NotificationAdapter (private val context: Context, var list: MutableList<R
                                 intent.putExtra("content", noitifi.content)
                                 intent.putExtra("isUserLiked", isUserLiked)
                                 intent.putExtra("idpost", noitifi._id)
-                                intent.putExtras(buldle)
+                                intent.putExtra("likeCount", noitifi.likeCount ?: 0)
+                                intent.putExtra("commentCount", noitifi.commentCount ?: 0)
 
+
+                                intent.putExtras(buldle)
                                 context.startActivity(intent)
                             }
                         }

@@ -144,6 +144,8 @@ class PostsAdapter(private val context: Context, var list: MutableList<ReadBook>
             intent.putExtra("content", posts.content)
             intent.putExtra("isUserLiked", isUserLiked)
             intent.putExtra("idpost", posts._id)
+            intent.putExtra("likeCount", posts.likeCount ?: 0)
+            intent.putExtra("commentCount", posts.commentCount ?: 0)
             intent.putExtras(buldle)
             // Bắt đầu Activity mới
 

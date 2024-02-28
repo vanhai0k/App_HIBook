@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -40,12 +41,21 @@ class Comment_Activity : AppCompatActivity() {
     lateinit var contentComment:EditText
     lateinit var imageLike: ImageView
     lateinit var contentmess : String
+    var likeCount: Int? = null
+    var commentCount: Int? = null
+    lateinit var countLike:TextView
+    lateinit var countcomment:TextView
+    lateinit var linnerComment:LinearLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
 
         contentComment = findViewById(R.id.contentComment)
         imageLike = findViewById(R.id.imageLike)
+        countLike = findViewById(R.id.countLike)
+        linnerComment = findViewById(R.id.linnerComment)
+        countcomment = findViewById(R.id.countcomment)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         val sharedPreferences = getSharedPreferences("UserLogin", MODE_PRIVATE)
@@ -82,6 +92,17 @@ class Comment_Activity : AppCompatActivity() {
             val contents = receBundle.getString("content")
             idpost = receBundle.getString("idpost").toString()
             user_idpost = receBundle.getString("user_idpost").toString()
+            likeCount = intent.getIntExtra("likeCount", 0)
+            commentCount = intent.getIntExtra("commentCount", 0)
+
+            commentCount = (commentCount ?: 0)
+            if (commentCount!! > 0){
+                countcomment.text = commentCount.toString()
+            }else{
+                linnerComment.visibility = View.GONE
+            }
+
+
             username.setText(name)
             time.setText(datepost)
             content.setText(contents)
@@ -95,11 +116,20 @@ class Comment_Activity : AppCompatActivity() {
                 .load(R.drawable.likecolor)
                 .into(imagelikeback)
             textlike.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaty))
+
+            likeCount = (likeCount ?: 0) - 1
+            if (likeCount!! > 0) {
+                countLike.text = "Bạn, $likeCount người khác"
+            } else {
+                countLike.text = "Bạn"
+            }
+
         } else {
             Glide.with(this)
                 .load(R.drawable.like)
                 .into(imagelikeback)
             textlike.setTextColor(ContextCompat.getColor(this, R.color.colorxam))
+            countLike.text = "$likeCount"
         }
         linlerLike.setOnClickListener {
             val sharedPreferences = getSharedPreferences("UserLogin", MODE_PRIVATE)
